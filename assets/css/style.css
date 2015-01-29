@@ -1,0 +1,57 @@
+* {
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+}
+
+.app-container {
+	margin: 2% 5%;
+}
+
+.page-header {
+	margin: 3rem 0;
+}
+
+.page-header h1 {
+	font-weight: 400;
+}
+
+.page-header h1 i {
+	color: #AAA;
+	font-style: normal;
+	font-weight: 300;
+}
+
+#code {
+	font-size: 100px;
+}
+
+#output-container {
+	text-align: center;
+	background: #EEE;
+	border-radius: 4px;
+	font-size: 1.2rem;
+	text-transform: uppercase;
+	line-height: 20px;
+	padding: 4rem 3rem;
+	margin-bottom: 1.5rem;
+	font-weight: 600;
+	letter-spacing: .1rem;
+}
+
+#output-container h1 {
+	font-size: 80px;
+}
+
+/*identifying editable portions*/
+
+.CodeMirror-scroll:hover:not(.static):not(.CodeMirror-focused) {
+  background: rgba(0,0,0,0.03);
+}
+
+.CodeMirror-scroll:hover.static:not(.CodeMirror-focused) {
+  background-color: rgba(0,0,0,0.03);
+}
+
+.CodeMirror-scroll {
+	max-height: 500px;
+} 

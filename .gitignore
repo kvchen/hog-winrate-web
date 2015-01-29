@@ -1,3 +1,6 @@
+# Hog calculation files
+docker/hog
+
 # Logs
 logs
 *.log
@@ -26,3 +29,4 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+.DS_Store

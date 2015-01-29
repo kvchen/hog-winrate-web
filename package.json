@@ -1,0 +1,22 @@
+{
+  "name": "hog-winrate-web",
+  "description": "calculate hog strategy winrates in real time",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "./node_modules/.bin/coffee ./server.coffee",
+    "test": "./node_modules/.bin/mocha --compilers coffee:coffee-script/register --require coffee-script --colors"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "body-parser": "^1.10.2",
+    "coffee-script": "^1.8.0",
+    "connect-assets": "^4.4.0",
+    "dockerode": "^2.0.6",
+    "express": "^4.11.1",
+    "jade": "^1.9.1",
+    "kue": "^0.8.11",
+    "node-uuid": "^1.4.2",
+    "winston": "^0.8.3"
+  }
+}
