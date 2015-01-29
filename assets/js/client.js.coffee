@@ -7,8 +7,15 @@ $ ->
 		lineNumbers: true
 		indentUnit: 4
 		matchBrackets: true
+		lineWrapping: true
 
 	editor.setValue '# Paste your final_strategy into this box, along with any helper functions you need.\n\ndef final_strategy(score, opponent_score):\n    """*** YOUR CODE HERE ***"""\n    return 5 # Replace this statement\n\n\n'
+	editor.setOption "extraKeys",
+		"Ctrl-Enter": (cm) ->
+			getWinrate()
+		"Cmd-Enter": (cm) ->
+			getWinrate()
+	editor.focus()
 
 	running = false
 	getWinrate = () ->
@@ -16,6 +23,8 @@ $ ->
 
 		running = true
 		NProgress.start()
+
+		$('#unhelpfulMessage').text 'calculating...'
 
 		params = JSON.stringify
 			strategy: editor.getValue()
@@ -27,9 +36,9 @@ $ ->
 			dataType: "json"
 			data: params
 			success: (res) ->
-				console.log res.data
-				if res.data.status == 'success'
-					winrate = res.data.winrate
+				console.log res
+				if res.status == 'success'
+					winrate = res.winrate
 
 					counter = new countUp 'winrate', 0, winrate, 2, 4, 
 						useEasing: true
@@ -41,13 +50,26 @@ $ ->
 					$('#winrate').text 'error!'
 					$('#unhelpfulMessage').text 'check below for details'
 
-
+			complete: (res) ->
 				NProgress.done()
 				running = false
+				
 			error: (res) ->
+				$('#winrate').text 'error!'
+				$('#unhelpfulMessage').text 'something broke :('
 
-				NProgress.done()
-				running = false
+	setMessage = (winrate) ->
+		if winrate <= 53
+			$('#unhelpfulMessage').text 'time to get cracking'
+		if winrate > 53
+			$('#unhelpfulMessage').text 'making progress...'
+		else if winrate > 55
+			$('#unhelpfulMessage').text 'almost there...'
+		else if winrate > 56
+			$('#unhelpfulMessage').text 'you did it!'
+
+	enableWinrate = () ->
+		running = false
 
 	$('#getWinrate').click (e) ->
 		console.log 'test'
