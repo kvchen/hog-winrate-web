@@ -81,6 +81,7 @@ body, html {
 
 .CodeMirror-scroll {
 	min-height: calc(100vh - 84px);
+	max-height: calc(100vh - 84px);
 }
 
 .footer {
