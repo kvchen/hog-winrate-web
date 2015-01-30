@@ -1,0 +1,99 @@
+* {
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+}
+
+body, html {
+  height: 100%;
+}
+
+.page-header {
+	height: 72px;
+	background: #373737;
+	color: #FFF;
+}
+
+.spacer {
+	height: 8px;
+	background: #CF6E6A;
+	margin-bottom: 4px;
+}
+
+.page-header h1 {
+	font-weight: 600;
+	font-size: 3rem;
+	line-height: 72px;
+}
+
+.page-header h1 i {
+	margin: 0 10px;
+}
+
+.page-header h1 b {
+	color: #AAA;
+	font-style: normal;
+	font-weight: 400;
+}
+
+.app-container {
+	background: #EEE;
+	height: 100%;
+	width: 100%;
+}
+
+.side-spacer {
+	margin: 0 2%;
+}
+
+#code {
+	font-size: 100px;
+}
+
+.code-container {
+	height: 100%;
+	width: 100%;
+}
+
+.output-container {
+	position: absolute;
+	display: inline-block;
+	right: 32px;
+	top: 32px;
+	width: 300px;
+
+	z-index: 15;
+}
+
+.winrate-container {
+	text-align: center;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+	background: #DCDCDC;
+	font-size: 1.5rem;
+	padding: 3rem 3rem;
+	text-transform: uppercase;
+}
+
+.winrate-container h1 {
+	font-size: 7rem;
+}
+
+
+.CodeMirror-scroll {
+	min-height: calc(100vh - 84px);
+}
+
+.footer {
+   position:fixed;
+   left:0px;
+   bottom:0px;
+   height:50px;
+   width:100%;
+   background: #2D3E50;
+   padding: 0 20px;
+   letter-spacing: 1px;
+   text-align: center;
+   line-height: 50px;
+   color: #FFF;
+
+}
