@@ -1,1 +1,1 @@
-docker build --no-cache -t arbiter docker/
+docker build -t arbiter docker/
