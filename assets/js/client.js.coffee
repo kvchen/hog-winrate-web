@@ -53,14 +53,28 @@ $ ->
 							suffix: '%'
 
 						counter.start () ->
-							if winrate <= 53
-								$('#unhelpfulMessage').text 'lots of room for progress...'
-							if winrate > 53
-								$('#unhelpfulMessage').text 'we\'re getting there...'
+							if winrate > 64
+								messages = ['that\'s it!', 'nothing left to do.', 'you solved it!']
+							else if winrate > 60
+								messages = ['now we\'re talking', 'keep optimizing', 'push it to the limit']
+							else if winrate >= 56
+								messages = ['you did it!', 'congrats!', 'top-tier work!', 'awesome!']
 							else if winrate > 55
-								$('#unhelpfulMessage').text 'almost there...'
-							else if winrate > 56
-								$('#unhelpfulMessage').text 'you did it!'
+								messages = ['so close!', 'almost there...', 'just a bit more']
+							else if winrate > 53
+								messages = ['getting there...', 'keep at it!', 'keep going!']
+							else if winrate > 49
+								messages = ['just about even']
+							else if winrate > 40
+								messages = ['could be a bit better', 'keep trying!', 'try something different!']
+							else if winrate > 30
+								messages = ['darnit', 'something\'s not right', 'something\'s off...']
+							else if winrate > 20
+								messages = ['huh...', 'that\'s kinda low...', 'need a boost?']
+							else
+								messages = [';_____;', ':(', '...']
+
+							$('#unhelpfulMessage').text messages[Math.floor (Math.random() * messages.length)]
 				else
 					$('#winrate').text 'error!'
 					$('#unhelpfulMessage').text 'something broke :('
