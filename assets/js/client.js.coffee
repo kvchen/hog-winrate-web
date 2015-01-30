@@ -24,6 +24,7 @@ $ ->
 		running = true
 		NProgress.start()
 
+		$('#winrate').text '...'
 		$('#unhelpfulMessage').text 'calculating...'
 
 		params = JSON.stringify
@@ -36,29 +37,33 @@ $ ->
 			dataType: "json"
 			data: params
 			success: (res) ->
-				if res.status == 'success' and res.output.status.exitCode == 0
+				if res.status == 'success'
 					output = res.output.output.split(/\r?\n/)
-
 					results = jQuery.parseJSON output[output.length - 2]
-					winrate = results.winrate * 100
 
-					counter = new countUp 'winrate', 0, winrate, 2, 4, 
-						useEasing: true
-						decimal: '.'
-						suffix: '%'
+					if results.error
+						$('#winrate').text 'error!'
+						$('#unhelpfulMessage').text 'looks like your code has a bug :('
+					else
+						winrate = results.winrate * 100
 
-					counter.start () ->
-						if winrate <= 53
-							$('#unhelpfulMessage').text 'lots of room for progress...'
-						if winrate > 53
-							$('#unhelpfulMessage').text 'we\'re getting there...'
-						else if winrate > 55
-							$('#unhelpfulMessage').text 'almost there...'
-						else if winrate > 56
-							$('#unhelpfulMessage').text 'you did it!'
+						counter = new countUp 'winrate', 0, winrate, 2, 4, 
+							useEasing: true
+							decimal: '.'
+							suffix: '%'
+
+						counter.start () ->
+							if winrate <= 53
+								$('#unhelpfulMessage').text 'lots of room for progress...'
+							if winrate > 53
+								$('#unhelpfulMessage').text 'we\'re getting there...'
+							else if winrate > 55
+								$('#unhelpfulMessage').text 'almost there...'
+							else if winrate > 56
+								$('#unhelpfulMessage').text 'you did it!'
 				else
 					$('#winrate').text 'error!'
-					$('#unhelpfulMessage').text 'something bad happened!\ntry checking your code'
+					$('#unhelpfulMessage').text 'something broke :('
 
 			complete: (res) ->
 				NProgress.done()
