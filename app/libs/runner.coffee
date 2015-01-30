@@ -93,18 +93,19 @@ getWinrate = (strategy, done) ->
 										container: container
 										volume: shared
 
-								return done null, response
+								done null, response
+								removeContainer container, shared
 
-
-removeContainer = (container, volume, done) ->
+removeContainer = (container, volume) ->
 	if container
-		container.remove force: true, (err, data) =>
-			logger.warn "Failed to remove container #{container}" if err
+		container.remove force: true, (err, data) ->
+			if err
+				logger.warn "Failed to remove container #{container.id}"
+			else
+				logger.info "Removed container #{container.id}"
 
 	fs.remove volume, (err) ->
 		logger.warn "Failed to remove tmp directory #{volume}" if err
-
-	done null
 
 
 exports.getWinrate = getWinrate
