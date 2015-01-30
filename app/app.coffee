@@ -15,7 +15,10 @@ app.set "view engine", "jade"
 app.disable "x-powered-by"
 
 app.use express.static __dirname + "/assets"
-app.use connectAssets()
+app.use connectAssets
+	compress: true
+	gzip: true
+
 app.use bodyParser.json()
 
 # View endpoints
