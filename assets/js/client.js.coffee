@@ -78,4 +78,3 @@ $ ->
 	$("#getWinrate").mouseup () ->
 		$(this).blur()
 
-

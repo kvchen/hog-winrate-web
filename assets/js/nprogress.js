@@ -473,4 +473,3 @@
 
   return NProgress;
 });
-
