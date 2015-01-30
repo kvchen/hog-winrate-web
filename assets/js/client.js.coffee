@@ -36,20 +36,29 @@ $ ->
 			dataType: "json"
 			data: params
 			success: (res) ->
-				console.log res
-				if res.status == 'success'
-					console.log res
-					winrate = res.winrate
+				if res.status == 'success' and res.output.status.exitCode == 0
+					output = res.output.output.split(/\r?\n/)
+
+					results = jQuery.parseJSON output[output.length - 2]
+					winrate = results.winrate * 100
 
 					counter = new countUp 'winrate', 0, winrate, 2, 4, 
 						useEasing: true
 						decimal: '.'
 						suffix: '%'
 
-					counter.start()
+					counter.start () ->
+						if winrate <= 53
+							$('#unhelpfulMessage').text 'lots of room for progress...'
+						if winrate > 53
+							$('#unhelpfulMessage').text 'we\'re getting there...'
+						else if winrate > 55
+							$('#unhelpfulMessage').text 'almost there...'
+						else if winrate > 56
+							$('#unhelpfulMessage').text 'you did it!'
 				else
 					$('#winrate').text 'error!'
-					$('#unhelpfulMessage').text 'check below for details'
+					$('#unhelpfulMessage').text 'something bad happened!\ntry checking your code'
 
 			complete: (res) ->
 				NProgress.done()
@@ -58,19 +67,6 @@ $ ->
 			error: (res) ->
 				$('#winrate').text 'error!'
 				$('#unhelpfulMessage').text 'something broke :('
-
-	setMessage = (winrate) ->
-		if winrate <= 53
-			$('#unhelpfulMessage').text 'time to get cracking'
-		if winrate > 53
-			$('#unhelpfulMessage').text 'making progress...'
-		else if winrate > 55
-			$('#unhelpfulMessage').text 'almost there...'
-		else if winrate > 56
-			$('#unhelpfulMessage').text 'you did it!'
-
-	enableWinrate = () ->
-		running = false
 
 	$('#getWinrate').click (e) ->
 		getWinrate()
