@@ -48,18 +48,24 @@ $ ->
 					counter.start () ->
 						$('#unhelpfulMessage').text res.message
 				else
-					setOutput ';___;', 'oops! your code has a ' + res.error.type
+					if res.error.type == 'KeyError'
+						setError 'your code doesn\'t always return an integer between 0 and 10.'
+					else
+						setError 'oops! your code has a ' + res.error.type + '.'
 
 			complete: (res) ->
 				NProgress.done()
 				running = false
 				
 			error: (res) ->
-				setOutput ';___;', 'rip server'
+				setError 'rip server'
 
 	setOutput = (winrate, msg) ->
 		$('#winrate').text winrate
 		$('#unhelpfulMessage').text msg
+
+	setError = (msg) ->
+		setOutput ';___;', msg
 
 	$('#getWinrate').click (e) ->
 		getWinrate()
