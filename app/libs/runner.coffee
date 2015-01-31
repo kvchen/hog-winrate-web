@@ -4,8 +4,8 @@ Docker = require "dockerode"
 MemoryStream = require "memorystream"
 
 fs = require "fs-extra"
-path = require "path"
 logger = require "./logger"
+path = require "path"
 shortId = require "shortid"
 
 runnerConfig = config.docker.runner
@@ -19,7 +19,7 @@ docker = new Docker
 basePath = path.dirname require.main.filename
 
 volumes = {}
-volumes[runnerConfig.volumes.code] = {}
+volumes[runnerConfig.volumes.share] = {}
 volumes[runnerConfig.volumes.env] = {}
 
 # Define options
@@ -33,70 +33,62 @@ containerOptions =
 attachOptions = runnerConfig.output
 
 
-
 getWinrate = (strategy, done) ->
 	id = shortId.generate()
-	shared = path.join basePath, "tmp", id
+	share = path.join basePath, "tmp", id
 
-	startOptions = 
-		Binds: ["#{shared}:#{runnerConfig.volumes.code}:ro"]
-
-	fs.mkdirs shared, (err) ->
+	fs.mkdirs share, (err) ->
 		return done err if err
 
-		fs.writeFile path.join(shared, 'hog.py'), strategy, (err) ->
+		fs.writeFile path.join(share, 'hog.py'), strategy, (err) ->
 			return done err if err
 
 			docker.createContainer containerOptions, (err, container) ->
 				return done err if err
 
-				container.attach attachOptions, (err, stream) ->
-					return done err if err
+				startContainer container, share, done
 
-					chunksRead = 0
-					timedOut = false
-					truncated = false
 
-					output = ""
-					outputStream = new MemoryStream()
-					outputStream.on "data", (chunk) ->
-						output += chunk
-						if ++chunksRead > runnerConfig.maxLength
-							logger.warn "#{id}: Output truncated"
-							truncated = true
-							stream.destroy()
+startContainer = (container, share, done) ->
+	container.attach attachOptions, (err) ->
+		if err
+			clean container, share
+			return done err
 
-					container.modem.demuxStream stream, outputStream, outputStream
+		startOptions =
+			Binds: ["#{share}:#{runnerConfig.volumes.share}"]
 
-					container.start startOptions, (err, data) ->
-						return done err if err
+		container.start startOptions, (err, data) ->
+			if err
+				clean container, share
+				return done err
 
-						timeout = setTimeout ( ->
-							logger.warn "#{id}: Code timed out"
-							timedOut = true
-							stream.destroy()
-						), runnerConfig.timeout
+			timedOut = false
+			timeout = setTimeout ( ->
+				timedOut = true
+				clean container, share
+			), runnerConfig.timeout
 
-						stream.on "end", ->
-							clearTimeout timeout
+			container.wait (err, data) ->
+				clearTimeout timeout
 
-							container.inspect (err, inspection) ->
-								return done err if err
+				if err
+					clean container, share
+					return done err
 
-								response = 
-									status:
-										exitCode: inspection.State.ExitCode
-										timedOut: timedOut
-										truncated: truncated
-									output: output
-									env:
-										container: container
-										volume: shared
+				if timedOut
+					response = 
+						'status': 'failure'
+						'error':
+							'type': 'TimeoutError'
+				else
+					response = require path.join share, 'outfile.json'
+				
+				done null, response
+				clean container, share
 
-								done null, response
-								removeContainer container, shared
 
-removeContainer = (container, volume) ->
+clean = (container, volume) ->
 	if container
 		container.remove force: true, (err, data) ->
 			if err
@@ -104,9 +96,11 @@ removeContainer = (container, volume) ->
 			else
 				logger.info "Removed container #{container.id}"
 
-	fs.remove volume, (err) ->
-		logger.warn "Failed to remove tmp directory #{volume}" if err
+	if volume
+		fs.remove volume, (err) ->
+			logger.warn "Failed to remove tmp directory #{volume}" if err
 
 
 exports.getWinrate = getWinrate
-exports.removeContainer = removeContainer
+
+

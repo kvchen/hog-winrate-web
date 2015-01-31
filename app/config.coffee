@@ -11,14 +11,14 @@ module.exports.docker =
   runner:
     image: "arbiter"
     networkDisabled: true
-    memory: 50e6
-    timeout: 1e4
+    memory: 10e6
+    timeout: 5e3
     maxLength: 1e3
     volumes:
-      code: "/opt/code"
+      share: "/opt/share"
       env: "/opt/env"
     output:
-      stream: true
-      stdout: true
-      stderr: true
+      stream: false
+      stdout: false
+      stderr: false
       tty: false
