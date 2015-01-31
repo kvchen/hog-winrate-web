@@ -48,14 +48,14 @@ $ ->
 					counter.start () ->
 						$('#unhelpfulMessage').text res.message
 				else
-					setOutput ';___;', res.error.type + '!'
+					setOutput ';___;', 'oops! your code has a ' + res.error.type
 
 			complete: (res) ->
 				NProgress.done()
 				running = false
 				
 			error: (res) ->
-				setOutput ';___;', 'you broke it :('
+				setOutput ';___;', 'rip server'
 
 	setOutput = (winrate, msg) ->
 		$('#winrate').text winrate
