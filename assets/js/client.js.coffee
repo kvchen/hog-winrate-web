@@ -15,6 +15,9 @@ $ ->
 			getWinrate()
 		"Cmd-Enter": (cm) ->
 			getWinrate()
+		"Tab": function(cm){
+			cm.replaceSelection("	", "end");
+		}
 	editor.focus()
 
 	running = false
@@ -50,6 +53,8 @@ $ ->
 				else
 					if res.error.type == 'KeyError'
 						setError 'your code doesn\'t always return an integer between 0 and 10.'
+					else if res.error.type == 'TimeoutError'
+						setError 'Your code timed out!\nCheck for infinite loops.'
 					else
 						setError 'oops! your code has a ' + res.error.type + '.'
 
