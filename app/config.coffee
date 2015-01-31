@@ -11,8 +11,8 @@ module.exports.docker =
   runner:
     image: "arbiter"
     networkDisabled: true
-    memory: 10e6
-    timeout: 5e3
+    memory: 50e6
+    timeout: 1e4
     maxLength: 1e3
     volumes:
       share: "/opt/share"

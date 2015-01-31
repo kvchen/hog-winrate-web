@@ -19,7 +19,7 @@ winrate = (req, res) ->
 						error: err.message
 				else
 					if output.winrate
-						output.message = getMessage winrate
+						output.message = getMessage winrate*100
 					res.status(200).json output
 
 
