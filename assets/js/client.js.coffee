@@ -15,9 +15,11 @@ $ ->
 			getWinrate()
 		"Cmd-Enter": (cm) ->
 			getWinrate()
-		"Tab": function(cm){
-			cm.replaceSelection("	", "end");
-		}
+		"Tab": (cm) ->
+			cm.replaceSelection("    " , "end");
+		"Shift-Tab": (cm) ->
+			cm.indentSelection("subtract")
+
 	editor.focus()
 
 	running = false
