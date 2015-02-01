@@ -1,5 +1,7 @@
 # Hog calculation files
-docker/hog
+docker/hog/winrate.py
+docker/hog/util.py
+docker/hog/optimal.py
 
 # Logs
 logs
