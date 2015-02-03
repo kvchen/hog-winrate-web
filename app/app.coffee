@@ -16,6 +16,7 @@ app.disable "x-powered-by"
 
 app.use express.static __dirname + "/assets"
 app.use connectAssets
+	paths: ["assets/js", "assets/css", "assets/img"]
 	compress: true
 	gzip: true
 
@@ -23,6 +24,7 @@ app.use bodyParser.json()
 
 # View endpoints
 app.get '/', routes.index
+app.get '/visualize', routes.visualize
 
 # API endpoints
 app.post '/winrate', routes.winrate

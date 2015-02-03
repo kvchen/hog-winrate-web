@@ -1,0 +1,57 @@
+* {
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+}
+
+body, html {
+  height: 100%;
+}
+
+.page-header {
+	height: 72px;
+	background: #34495e;
+	color: #FFF;
+}
+
+.page-header h1 {
+	font-weight: 600;
+	font-size: 3rem;
+	line-height: 72px;
+}
+
+.page-header h1 i {
+	margin: 0 10px;
+}
+
+.page-header h1 b {
+	color: #AAA;
+	font-style: normal;
+	font-weight: 400;
+}
+
+.CodeMirror-scroll {
+	min-height: calc(100vh - 84px);
+	max-height: calc(100vh - 84px);
+}
+
+.side-spacer {
+	margin: 0 2%;
+}
+
+#moveset-grid {
+	padding: 20px;
+	background: #EEE;
+}
+
+#moveset-grid text {
+  font: 9px sans-serif;
+  fill: #000;
+}
+
+#moveset-grid .row text {
+  text-anchor: end;
+}
+
+#moveset-grid .column text {
+  text-anchor: start;
+}

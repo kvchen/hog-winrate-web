@@ -4,14 +4,14 @@ html(lang="en")
 	head
 		// Found a bug? Email me at kvchen@berkeley.edu for your cookies :)
 
-		title="Hog Winrate Calculator"
+		title="Hog Strategy Visualizer (Alpha!)"
 		meta(name="theme-color" content="#db5945")
 
 		!= css("normalize")
 		!= css("skeleton")
 		!= css("nprogress")
 		!= css("codemirror")
-		!= css("style")
+		!= css("visualize")
 
 		link(href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css")
 		link(href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600' rel='stylesheet' type='text/css')
@@ -21,25 +21,20 @@ html(lang="en")
 		div(class="app-container")
 			div(class="row page-header u-full-width")
 				div(class="side-spacer")
-					h1 #[i(class="fa fa-icon fa-simplybuilt fa-inverse")] hog.#[b winrate]
-			div(class="spacer u-full-width")
+					h1 #[i(class="fa fa-icon fa-simplybuilt fa-inverse")] hog.#[b visualize (alpha!)]
 
 			div(class="row" style="position: relative;")
-				div(class="twelve columns")
+				div(class="five columns")
 					textarea(id="code", name="code")
-
-				div(class="output-container")
-					div(class="winrate-container")
-						h1(id="winrate") 0.00%
-						p(id="unhelpfulMessage") 1) Paste your code <br>2) Check the winrate<br>3) Rinse and repeat
-
-					input(class="button-primary u-full-width" id="getWinrate" type="button" value="Calculate Winrate")
+				div(class="seven columns")
+					div(id="moveset-grid")
 
 	footer
 		script(src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js")
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js")
 		!= js("nprogress")
 		!= js("codemirror")
 		!= js("python/python")
-		!= js("countUp.min")
-		!= js("client")
+		!= js("grid")
+		!= js("visualize")
 		!= js("analytics")

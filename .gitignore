@@ -2,6 +2,7 @@
 docker/hog/winrate.py
 docker/hog/util.py
 docker/hog/optimal.py
+docker/hog/hog.py
 
 # Logs
 logs
