@@ -9,7 +9,7 @@ $ ->
 		matchBrackets: true
 		lineWrapping: true
 
-	editor.setValue '# Paste your final_strategy into this box, along with any helper functions you need.\n\ndef final_strategy(score, opponent_score):\n    """*** YOUR CODE HERE ***"""\n    return 5 # Replace this statement\n\n\n'
+	editor.setValue '# Paste your final_strategy into this box, along with any helper functions you need. Use Ctrl+Enter or Cmd+Enter to generate a plot!\n\ndef final_strategy(score, opponent_score):\n    """*** YOUR CODE HERE ***"""\n    return 5 # Replace this statement\n\n\n'
 	editor.setOption "extraKeys",
 		"Ctrl-Enter": (cm) ->
 			drawStrategy()
